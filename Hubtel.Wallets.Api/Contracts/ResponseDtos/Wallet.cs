@@ -1,23 +1,21 @@
-using System.ComponentModel.DataAnnotations;
-using Hubtel.Wallets.Api.Contracts.DataDtos;
+using System;
 
-namespace Hubtel.Wallets.Api.Models
+namespace Hubtel.Wallets.Api.Contracts.ResponseDtos
 {
-    public class Wallet : ModelWithId
+    public record WalletDto
     {
-        [Required]
+        public string Id { set; get; } = null!;
         public string Name { set; get; } = null!;
 
-        [Required]
         public string Type { set; get; } = null!;
 
-        [Required]
         public string AccountNumber { set; get; } = null!;
 
-        [Required]
         public string AccountScheme { set; get; } = null!;
 
-        [Required]
         public string Owner { set; get; } = null!;
+
+        public DateTimeOffset CreatedDate { get; set; }
+        public DateTimeOffset UpdatedDate { get; set; }
     }
 }
