@@ -101,9 +101,9 @@ namespace Hubtel.Wallets.Api.Controllers
             }
 
             walletDto.AccountNumber =
-                walletDto.AccountNumber.Length <= 6
-                    ? walletDto.AccountNumber
-                    : walletDto.AccountNumber.Substring(walletDto.AccountNumber.Length - 6);
+                walletDto.AccountNumber.Length >= 6
+                    ? walletDto.AccountNumber.Substring(0, 6)
+                    : walletDto.AccountNumber;
 
             Wallet item = new Wallet()
             {
