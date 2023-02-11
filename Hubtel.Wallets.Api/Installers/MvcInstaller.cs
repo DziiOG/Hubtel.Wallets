@@ -1,4 +1,3 @@
-
 using Hubtel.Wallets.Api.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -7,9 +6,7 @@ using Microsoft.OpenApi.Models;
 using System.Collections.Generic;
 using System.Linq;
 
-
-
-namespace Agents.Api.Intallers
+namespace Hubtel.Wallets.Api.Intallers
 {
     /// <summary>
     ///   Class installs most of the controllers, swagger and jwt settings
@@ -24,13 +21,10 @@ namespace Agents.Api.Intallers
         /// <returns>void</returns>
         public void InstallServices(IServiceCollection services, IConfiguration configuration)
         {
-           
-
             services.AddControllers(options =>
             {
                 options.SuppressAsyncSuffixInActionNames = false;
             });
-
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             services.AddSwaggerGen(x =>

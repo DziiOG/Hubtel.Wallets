@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Agents.Api.Contracts.DataDtos;
+using Hubtel.Wallets.Api.Contracts.DataDtos;
 using MongoDB.Bson;
 
-namespace Agents.Api.Interfaces
+namespace Hubtel.Wallets.Api.Interfaces
 {
     public interface IBaseRepository<T>
     {

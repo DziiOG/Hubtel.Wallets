@@ -1,4 +1,4 @@
-using Agents.Api.Contracts.ResponseDtos;
+using Hubtel.Wallets.Api.Contracts.ResponseDtos;
 using Hubtel.Wallets.Api.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;

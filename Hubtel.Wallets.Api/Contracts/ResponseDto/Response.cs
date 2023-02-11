@@ -1,5 +1,6 @@
 using System.Collections.Generic;
-namespace Agents.Api.Contracts.ResponseDtos
+
+namespace Hubtel.Wallets.Api.Contracts.ResponseDtos
 {
     /// <summary>
     /// class defines custom error object

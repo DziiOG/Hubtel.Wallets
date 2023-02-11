@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Agents.Api.Contracts.DataDtos
+namespace Hubtel.Wallets.Api.Contracts.DataDtos
 {
     public class FilterCriteriaItem
     {
