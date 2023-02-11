@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using MongoDB.Bson;
 using System;
 using Hubtel.Wallets.Api.Extensions;
+using Hubtel.Wallets.Api.Contracts.RequestDtos;
+using System.Linq;
 
 namespace Hubtel.Wallets.Api.Controllers
 {
@@ -81,12 +83,11 @@ namespace Hubtel.Wallets.Api.Controllers
         {
             Wallet item = new Wallet()
             {
-                Id = ObjectId.Parse(walletDto.Id),
-                LevelOfEducation = walletDto.LevelOfEducation,
-                YearsOfExperience = walletDto.YearsOfExperience,
-                FarmingExperience = walletDto.FarmingExperience,
-                CropsSupervised = walletDto.CropsSupervised,
-                CourseOfStudy = walletDto.CourseOfStudy,
+                Name = walletDto.Name,
+                Type = walletDto.Type,
+                AccountNumber = walletDto.AccountNumber,
+                AccountScheme = walletDto.AccountScheme,
+                Owner = walletDto.Owner,
                 CreatedDate = DateTimeOffset.UtcNow,
                 UpdatedDate = DateTimeOffset.UtcNow
             };
