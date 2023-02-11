@@ -46,7 +46,6 @@ namespace Hubtel.Wallets.Api.Intallers
                     Port = port,
                     DatabaseName = dbName,
                 };
-                Console.WriteLine(settings.ConnectionString);
                 IMongoClient client = new MongoDB.Driver.MongoClient(settings.ConnectionString);
                 client.WithReadConcern(MongoDB.Driver.ReadConcern.Majority);
                 client.WithWriteConcern(MongoDB.Driver.WriteConcern.WMajority);

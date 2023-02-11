@@ -39,7 +39,6 @@ namespace Hubtel.Wallets.Api.Controllers
             [FromQuery] WalletQueryDto Query
         )
         {
-            Console.WriteLine(Query);
             IEnumerable<WalletDto>? wallets = (
                 await repository.GetAsync(criteria: Query.ToFilterCriteria())
             ).Select(wallet => wallet.AsDto());

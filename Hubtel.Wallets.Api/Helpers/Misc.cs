@@ -59,7 +59,6 @@ namespace Hubtel.Wallets.Api.Helpers
             if (string.IsNullOrWhiteSpace(phoneNumber))
                 return false;
 
-            Console.WriteLine(phoneNumber);
             return PhoneNumberPattern.IsMatch(phoneNumber);
         }
 
@@ -70,7 +69,6 @@ namespace Hubtel.Wallets.Api.Helpers
 
         public static bool IsValidMomoScheme(string value)
         {
-            Console.WriteLine(value);
             return value == "mtn" || value == "airteltigo" || value == "vodafone";
         }
 
