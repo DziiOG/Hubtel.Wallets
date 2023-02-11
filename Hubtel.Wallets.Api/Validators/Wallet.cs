@@ -49,65 +49,16 @@ namespace Hubtel.Wallets.Api.Validators
 
     public class PatchWalletValidator : AbstractValidator<PatchWalletDto>
     {
-        public PatchWalletValidator()
-        {
-            RuleFor(x => x.Name);
-            RuleFor(x => x.Type)
-                .Must(x => !string.IsNullOrEmpty(x) ? x == "momo" || x == "card" : true)
-                .WithMessage("Type must be either 'momo' or 'card'.");
-
-            RuleFor(x => x.AccountNumber)
-                .Must(x => !string.IsNullOrEmpty(x) ? Misc.IsValidPhoneNumber(x) : true)
-                .When(x => x.Type == "momo")
-                .WithMessage(
-                    "AccountNumber must be a valid phone number if Type is 'momo' or a valid card number if Type is 'card'."
-                )
-                .Must(x => !string.IsNullOrEmpty(x) ? Misc.IsValidCardNumber(x) : true)
-                .When(x => x.Type == "card")
-                .WithMessage(
-                    "AccountNumber must be a valid phone number if Type is 'momo' or a valid card number if Type is 'card'."
-                );
-
-            RuleFor(x => x.AccountScheme)
-                .Must(x => !string.IsNullOrEmpty(x) ? Misc.IsValidMomoScheme(x) : true)
-                .When(x => x.Type == "momo")
-                .WithMessage(
-                    "AccountScheme must be a valid momo scheme if Type is 'momo' or a valid card scheme if Type is 'card'."
-                )
-                .Must(x => !string.IsNullOrEmpty(x) ? Misc.IsValidCardScheme(x) : true)
-                .When(x => x.Type == "card")
-                .WithMessage(
-                    "AccountScheme must be a valid momo scheme if Type is 'momo' or a valid card scheme if Type is 'card'."
-                );
-
-            RuleFor(x => x.Owner)
-                .Must(x => !string.IsNullOrEmpty(x) ? Misc.IsValidPhoneNumber(x) : true)
-                .WithMessage("Owner must be a valid phone number.");
-        }
+        public PatchWalletValidator() { }
     }
 
     public class QueryWalletValidator : AbstractValidator<WalletQueryDto>
     {
         public QueryWalletValidator()
         {
-            RuleFor(x => x.AccountScheme)
-                .Must(x => !string.IsNullOrEmpty(x) ? Misc.IsValidMomoScheme(x) : true)
-                .When(x => x.Type == "momo")
-                .WithMessage(
-                    "AccountScheme must be a valid momo scheme if Type is 'momo' or a valid card scheme if Type is 'card'."
-                )
-                .Must(x => !string.IsNullOrEmpty(x) ? Misc.IsValidCardScheme(x) : true)
-                .When(x => x.Type == "card")
-                .WithMessage(
-                    "AccountScheme must be a valid momo scheme if Type is 'momo' or a valid card scheme if Type is 'card'."
-                );
-
-            RuleFor(x => x.Type)
-                .Must(x => !string.IsNullOrEmpty(x) ? x == "momo" || x == "card" : true)
-                .WithMessage("Type must be either 'momo' or 'card'.");
-            RuleFor(x => x.Owner)
-                .Must(x => !string.IsNullOrEmpty(x) ? Misc.IsValidPhoneNumber(x) : true)
-                .WithMessage("Owner must be a valid phone number.");
+            RuleFor(x => x.Owner);
+            // .Must(x => !string.IsNullOrEmpty(x) ? Misc.IsValidPhoneNumber(x) : true)
+            // .WithMessage("Owner must be a valid phone number.");
         }
     }
 }

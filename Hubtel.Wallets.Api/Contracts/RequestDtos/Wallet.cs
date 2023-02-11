@@ -2,10 +2,6 @@ namespace Hubtel.Wallets.Api.Contracts.RequestDtos
 {
     public record WalletQueryDto
     {
-        public string? Type { set; get; } = null!;
-
-        public string? AccountScheme { set; get; } = null!;
-
         public string? Owner { set; get; } = null!;
     }
 

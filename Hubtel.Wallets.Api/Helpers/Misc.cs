@@ -59,6 +59,7 @@ namespace Hubtel.Wallets.Api.Helpers
             if (string.IsNullOrWhiteSpace(phoneNumber))
                 return false;
 
+            Console.WriteLine(phoneNumber);
             return PhoneNumberPattern.IsMatch(phoneNumber);
         }
 
