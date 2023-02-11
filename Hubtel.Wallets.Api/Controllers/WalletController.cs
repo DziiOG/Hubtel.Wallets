@@ -108,7 +108,10 @@ namespace Hubtel.Wallets.Api.Controllers
             {
                 Name = walletDto.Name,
                 Type = walletDto.Type,
-                AccountNumberHash = Misc.GenerateHash(walletDto.AccountNumber),
+                AccountNumberHash =
+                    walletDto.Type == "momo"
+                        ? walletDto.AccountNumber
+                        : Misc.GenerateHash(walletDto.AccountNumber),
                 AccountScheme = walletDto.AccountScheme,
                 Owner = walletDto.Owner,
                 CreatedDate = DateTimeOffset.UtcNow,
