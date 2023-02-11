@@ -1,0 +1,9 @@
+{
+    // Set the default
+"editor.formatOnSave": false,
+// Enable per-language
+"[csharp]": {
+    "editor.formatOnSave": true
+},
+"dotnet-test-explorer.testProjectPath": "**/*Tests.csproj"
+}
