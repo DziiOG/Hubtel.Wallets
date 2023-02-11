@@ -25,7 +25,7 @@ namespace Hubtel.Wallets.Api.Settings
         /// </summary>
         public string ConnectionString
         {
-            get { return $"mongodb+srv://{Host}:{Port}"; }
+            get { return $"mongodb://{Host}:{Port}"; }
         }
     }
 }

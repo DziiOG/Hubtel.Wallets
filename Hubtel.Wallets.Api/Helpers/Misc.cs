@@ -6,6 +6,8 @@ using Hubtel.Wallets.Api.Settings;
 using FluentValidation;
 using MongoDB.Driver;
 using MongoDB.Bson;
+using System.Text.RegularExpressions;
+using System;
 
 namespace Hubtel.Wallets.Api.Helpers
 {
@@ -47,6 +49,32 @@ namespace Hubtel.Wallets.Api.Helpers
             }
 
             return query;
+        }
+
+        private static readonly Regex PhoneNumberPattern = new Regex(@"^\+(?:[0-9] ?){6,14}[0-9]$");
+
+        public static bool IsValidPhoneNumber(string phoneNumber)
+        {
+            if (string.IsNullOrWhiteSpace(phoneNumber))
+                return false;
+
+            return PhoneNumberPattern.IsMatch(phoneNumber);
+        }
+
+        public static bool IsValidCardNumber(string cardNumber)
+        {
+            return Regex.Match(cardNumber.Substring(0, 6), @"^\d{6}$").Success;
+        }
+
+        public static bool IsValidMomoScheme(string value)
+        {
+            Console.WriteLine(value);
+            return value == "mtn" || value == "airteltigo" || value == "vodafone";
+        }
+
+        public static bool IsValidCardScheme(string value)
+        {
+            return value == "visa" || value == "mastercard";
         }
     }
 }

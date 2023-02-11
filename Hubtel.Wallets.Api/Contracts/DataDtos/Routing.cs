@@ -9,7 +9,7 @@ namespace Hubtel.Wallets.Api.Contracts.DataDtos
 
         public static class WalletsApiRoutes
         {
-            public const string WalletsBase = Base + "/" + "agents";
+            public const string WalletsBase = Base + "/" + "wallets";
             public const string ById = "{id}";
         }
     }
