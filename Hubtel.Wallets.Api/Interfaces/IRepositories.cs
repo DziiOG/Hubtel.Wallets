@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Hubtel.Wallets.Api.Contracts.DataDtos;
+using Hubtel.Wallets.Api.Models;
 using MongoDB.Bson;
 
 namespace Hubtel.Wallets.Api.Interfaces
@@ -17,4 +18,6 @@ namespace Hubtel.Wallets.Api.Interfaces
         public Task DeleteAsync(ObjectId id);
         public Task PatchAsync(ObjectId Id, List<FilterCriteriaItem> criteria);
     }
+
+    public interface IWalletRepository : IBaseRepository<Wallet> { }
 }

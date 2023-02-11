@@ -34,8 +34,8 @@ namespace Hubtel.Wallets.Api.Intallers
                     new OpenApiInfo
                     {
                         Version = "v1",
-                        Title = "Agents API",
-                        Description = "An ASP.NET Core Web API for managing Agents",
+                        Title = "Wallets API",
+                        Description = "An ASP.NET Core Web API for managing wallets",
                     }
                 );
 
