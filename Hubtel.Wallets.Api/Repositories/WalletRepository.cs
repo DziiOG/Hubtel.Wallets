@@ -12,6 +12,14 @@ namespace Hubtel.Wallets.Api.Repositories
         private const string collectionName = "wallets";
 
         public WalletRepository(IMongoDatabase db)
-            : base(db, collectionName) { }
+            : base(db, collectionName)
+        {
+            var WalletKey = Builders<Wallet>.IndexKeys
+                .Ascending("Owner")
+                .Ascending("AccountNumberHash");
+            var indexOptions = new CreateIndexOptions { Unique = true };
+            var Wallet = new CreateIndexModel<Wallet>(WalletKey, indexOptions);
+            collection.Indexes.CreateOne(Wallet);
+        }
     }
 }

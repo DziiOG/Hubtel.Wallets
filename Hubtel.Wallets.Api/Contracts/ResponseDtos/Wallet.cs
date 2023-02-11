@@ -9,8 +9,6 @@ namespace Hubtel.Wallets.Api.Contracts.ResponseDtos
 
         public string Type { set; get; } = null!;
 
-        public string AccountNumber { set; get; } = null!;
-
         public string AccountScheme { set; get; } = null!;
 
         public string Owner { set; get; } = null!;

@@ -11,6 +11,8 @@ using System;
 using Hubtel.Wallets.Api.Extensions;
 using Hubtel.Wallets.Api.Contracts.RequestDtos;
 using System.Linq;
+using System.Security.Cryptography;
+using Hubtel.Wallets.Api.Helpers;
 
 namespace Hubtel.Wallets.Api.Controllers
 {
@@ -81,17 +83,52 @@ namespace Hubtel.Wallets.Api.Controllers
             [FromBody] CreateWalletDto walletDto
         )
         {
+            WalletQueryDto Query = new WalletQueryDto() { Owner = walletDto.Owner };
+
+            IEnumerable<WalletDto>? wallets = (
+                await repository.GetAsync(criteria: Query.ToFilterCriteria())
+            ).Select(wallet => wallet.AsDto());
+
+            if (wallets.Count() > 5)
+            {
+                return BadRequest(
+                    new ResponseWithError()
+                    {
+                        statusCode = 400,
+                        message = "You have exceeded the number of times you can add a wallet"
+                    }
+                );
+            }
+
+            walletDto.AccountNumber =
+                walletDto.AccountNumber.Length <= 6
+                    ? walletDto.AccountNumber
+                    : walletDto.AccountNumber.Substring(walletDto.AccountNumber.Length - 6);
+
             Wallet item = new Wallet()
             {
                 Name = walletDto.Name,
                 Type = walletDto.Type,
-                AccountNumber = walletDto.AccountNumber,
+                AccountNumberHash = Misc.GenerateHash(walletDto.AccountNumber),
                 AccountScheme = walletDto.AccountScheme,
                 Owner = walletDto.Owner,
                 CreatedDate = DateTimeOffset.UtcNow,
                 UpdatedDate = DateTimeOffset.UtcNow
             };
-            await repository.CreateAsync(item);
+            try
+            {
+                await repository.CreateAsync(item);
+            }
+            catch (MongoDB.Driver.MongoWriteException)
+            {
+                return BadRequest(
+                    new ResponseWithError()
+                    {
+                        statusCode = 400,
+                        message = "Cannot add the same account number again"
+                    }
+                );
+            }
 
             // returns a 201 response with the new created item by calling a reference method that would return the new created data
             return CreatedAtAction(
@@ -104,34 +141,6 @@ namespace Hubtel.Wallets.Api.Controllers
                     message = "Wallet created successfully"
                 }
             );
-        }
-
-        // PATCH /wallets/{id}
-        [HttpPatch(ApiRoutes.WalletsApiRoutes.ById)]
-        [Validate<string>("id")]
-        [Validate<PatchWalletDto>("walletDto")]
-        public async Task<ActionResult<SuccessWithDataResponse<WalletDto?>?>?> PatchAsync(
-            [FromRoute] string id,
-            [FromBody] PatchWalletDto walletDto
-        )
-        {
-            ObjectId Id = ObjectId.Parse(id);
-            Wallet? wallet = await repository.GetByIdAsync(Id)!;
-            if (wallet == null)
-            {
-                return NotFound(
-                    new ResponseWithError() { statusCode = 404, message = "Not found" }
-                );
-            }
-            List<FilterCriteriaItem>? patchQuery = walletDto.ToFilterCriteria();
-            await repository.PatchAsync(Id, patchQuery);
-            Wallet? updatedDoc = await repository.GetByIdAsync(Id)!;
-            return new SuccessWithDataResponse<WalletDto?>()
-            {
-                data = updatedDoc!.AsDto(),
-                statusCode = 200,
-                message = "Wallet patched successfully"
-            };
         }
 
         // DELETE /wallets/{id}

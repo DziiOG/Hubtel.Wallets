@@ -8,6 +8,7 @@ using MongoDB.Driver;
 using MongoDB.Bson;
 using System.Text.RegularExpressions;
 using System;
+using System.Security.Cryptography;
 
 namespace Hubtel.Wallets.Api.Helpers
 {
@@ -75,6 +76,18 @@ namespace Hubtel.Wallets.Api.Helpers
         public static bool IsValidCardScheme(string value)
         {
             return value == "visa" || value == "mastercard";
+        }
+
+        public static string GenerateHash(string cardNumber)
+        {
+            using (SHA256 sha256Hash = SHA256.Create())
+            {
+                byte[] hash = sha256Hash.ComputeHash(
+                    System.Text.Encoding.UTF8.GetBytes(cardNumber)
+                );
+                string cardNumberHash = BitConverter.ToString(hash).Replace("-", string.Empty);
+                return cardNumberHash;
+            }
         }
     }
 }

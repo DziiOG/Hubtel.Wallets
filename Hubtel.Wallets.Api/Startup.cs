@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Hubtel.Wallets.Api
@@ -62,9 +63,8 @@ namespace Hubtel.Wallets.Api
                             message = exception.Error.Message,
                             statusCode = context.Response.StatusCode
                         };
-                        await context.Response.WriteAsync(
-                            System.Text.Json.JsonSerializer.Serialize(response)
-                        );
+                        context.Response.ContentType = "application/json";
+                        await context.Response.WriteAsync(JsonSerializer.Serialize(response));
                     }
                 });
             });

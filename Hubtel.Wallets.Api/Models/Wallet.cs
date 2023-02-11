@@ -12,7 +12,7 @@ namespace Hubtel.Wallets.Api.Models
         public string Type { set; get; } = null!;
 
         [Required]
-        public string AccountNumber { set; get; } = null!;
+        public string AccountNumberHash { set; get; } = null!;
 
         [Required]
         public string AccountScheme { set; get; } = null!;

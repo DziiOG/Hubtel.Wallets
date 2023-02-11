@@ -20,7 +20,6 @@ namespace Hubtel.Wallets.Api.Extensions
                 Id = wallet.Id.ToString(),
                 Name = wallet.Name,
                 Type = wallet.Type,
-                AccountNumber = wallet.AccountNumber,
                 AccountScheme = wallet.AccountScheme,
                 Owner = wallet.Owner,
                 CreatedDate = wallet.CreatedDate,

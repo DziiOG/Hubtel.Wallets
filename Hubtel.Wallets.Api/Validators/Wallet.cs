@@ -8,44 +8,42 @@ namespace Hubtel.Wallets.Api.Validators
     {
         public CreateWalletValidator()
         {
-            RuleFor(x => x.Name).NotEmpty().WithMessage("Name is required.");
+            RuleFor(x => x.Name).NotEmpty().WithMessage("Name is required");
+
             RuleFor(x => x.Type)
                 .NotEmpty()
-                .WithMessage("Type is required.")
+                .WithMessage("Type of wallet is required")
                 .Must(x => x == "momo" || x == "card")
-                .WithMessage("Type must be either 'momo' or 'card'.");
+                .WithMessage("Type must be either 'momo' or 'card'");
 
             RuleFor(x => x.AccountNumber)
-                .NotEmpty()
-                .WithMessage("AccountNumber is required.")
-                .When(x => x.Type == "momo")
-                .Must(x => Misc.IsValidPhoneNumber(x))
-                .WithMessage(
-                    "AccountNumber must be a valid phone number if Type is 'momo' or a valid card number if Type is 'card'."
-                )
+                .Must(x => x.Length >= 6 && x.Length <= 16)
                 .When(x => x.Type == "card")
+                .WithMessage("Card number must be between 6 and 16 characters")
                 .Must(x => Misc.IsValidCardNumber(x))
                 .When(x => x.Type == "card")
-                .MinimumLength(6)
-                .When(x => x.Type == "card")
-                .MaximumLength(16)
-                .WithMessage(
-                    "AccountNumber must be a valid phone number if Type is 'momo' or a valid card number if Type is 'card'."
-                );
+                .WithMessage("Invalid card number");
+
+            RuleFor(x => x.AccountNumber)
+                .Must(x => Misc.IsValidPhoneNumber(x))
+                .When(x => x.Type == "momo")
+                .WithMessage("Invalid phone number");
 
             RuleFor(x => x.AccountScheme)
-                .NotEmpty()
-                .WithMessage("AccountScheme is required.")
+                .Must(x => x == "mtn" || x == "airteltigo" || x == "vodafone")
                 .When(x => x.Type == "momo")
-                .Must(x => Misc.IsValidMomoScheme(x))
+                .WithMessage("Momo must be one of 'mtn', 'airteltigo', 'vodafone'");
+
+            RuleFor(x => x.AccountScheme)
+                .Must(x => x == "visa" || x == "mastercard")
                 .When(x => x.Type == "card")
-                .Must(x => Misc.IsValidCardScheme(x));
+                .WithMessage("Card must be one of 'visa', 'mastercard'");
 
             RuleFor(x => x.Owner)
                 .NotEmpty()
-                .WithMessage("Owner is required.")
+                .WithMessage("User phone number is required")
                 .Must(x => Misc.IsValidPhoneNumber(x))
-                .WithMessage("Owner must be a valid phone number.");
+                .WithMessage("Invalid phone number");
         }
     }
 
