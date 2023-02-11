@@ -33,7 +33,6 @@ namespace Hubtel.Wallets.Api.Controllers
 
         // GET /wallets
         [HttpGet]
-        // [RedisCached(duration: 60)]
         [Validate<WalletQueryDto>("Query")]
         public async Task<ActionResult<SuccessWithDataResponse<IEnumerable<WalletDto>?>?>> GetAsync(
             [FromQuery] WalletQueryDto Query
@@ -130,7 +129,6 @@ namespace Hubtel.Wallets.Api.Controllers
                 );
             }
 
-            // returns a 201 response with the new created item by calling a reference method that would return the new created data
             return CreatedAtAction(
                 nameof(GetByIdAsync),
                 new { id = item.Id },
