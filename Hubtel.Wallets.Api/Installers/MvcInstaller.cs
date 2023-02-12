@@ -19,6 +19,17 @@ namespace Hubtel.Wallets.Api.Intallers
         /// <returns>void</returns>
         public void InstallServices(IServiceCollection services, IConfiguration configuration)
         {
+            // ConfigureServices
+            services.AddCors(options =>
+            {
+                options.AddPolicy(
+                    "AnyOrigin",
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin().AllowAnyMethod();
+                    }
+                );
+            });
             services.AddControllers(options =>
             {
                 options.SuppressAsyncSuffixInActionNames = false;

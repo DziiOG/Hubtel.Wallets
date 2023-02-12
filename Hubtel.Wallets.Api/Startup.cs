@@ -68,6 +68,7 @@ namespace Hubtel.Wallets.Api
                     }
                 });
             });
+            app.UseCors("AnyOrigin");
 
             app.UseEndpoints(endpoints =>
             {
