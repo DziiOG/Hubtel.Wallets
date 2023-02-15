@@ -99,24 +99,30 @@ namespace Hubtel.Wallets.Api.Controllers
                 );
             }
 
-            walletDto.AccountNumber =
-                walletDto.AccountNumber.Length >= 6
-                    ? walletDto.AccountNumber.Substring(0, 6)
-                    : walletDto.AccountNumber;
+            if (walletDto.Type != "momo")
+            {
+                walletDto.AccountNumber =
+                    walletDto.AccountNumber.Length >= 6
+                        ? walletDto.AccountNumber.Substring(0, 6)
+                        : walletDto.AccountNumber;
+            }
 
             Wallet item = new Wallet()
             {
                 Name = walletDto.Name,
                 Type = walletDto.Type,
-                AccountNumberHash =
-                    walletDto.Type == "momo"
-                        ? walletDto.AccountNumber
-                        : Misc.GenerateHash(walletDto.AccountNumber),
+                AccountNumberHash = Misc.GenerateHash(walletDto.AccountNumber),
                 AccountScheme = walletDto.AccountScheme,
                 Owner = walletDto.Owner,
                 CreatedDate = DateTimeOffset.UtcNow,
                 UpdatedDate = DateTimeOffset.UtcNow
             };
+
+            if (walletDto.Type == "momo")
+            {
+                item.PhoneNumber = walletDto.AccountNumber;
+            }
+
             try
             {
                 await repository.CreateAsync(item);

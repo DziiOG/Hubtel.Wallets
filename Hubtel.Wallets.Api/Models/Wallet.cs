@@ -19,5 +19,7 @@ namespace Hubtel.Wallets.Api.Models
 
         [Required]
         public string Owner { set; get; } = null!;
+
+        public string PhoneNumber { set; get; } = null!;
     }
 }
